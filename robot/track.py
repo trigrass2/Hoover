@@ -19,6 +19,8 @@ class RobotEngine:
 	MAX_SPEED = 100
 	
 	def __init__(self):
+		self.left_speed = 0
+		self.right_speed = 0
 		self.current_speed = 0
 		
 		# create a default object, no changes to I2C address or frequency
@@ -27,53 +29,66 @@ class RobotEngine:
 		# init motors
 		self.left_motor = self.motor.getMotor(2)
 		self.right_motor = self.motor.getMotor(3)
-		
-		# set the speed to start, from 0 (off) to 255 (max speed)
-		self.left_motor.setSpeed(100)
+
 		self.left_motor.run(Motor.FORWARD);
-		self.right_motor.setSpeed(100)
 		self.right_motor.run(Motor.FORWARD);
 		
 		# turn on motor
 		self.left_motor.run(Motor.RELEASE);
 		self.right_motor.run(Motor.RELEASE);
+
+
+	def speed_motor_left(self, to_speed):
+		if to_speed > 0:
+			self.left_motor.run(Motor.FORWARD)
+		else:
+			self.left_motor.run(Motor.BACKWARD)
 		
-		self.left_motor.setSpeed(0)
-		self.right_motor.setSpeed(0)
+		if to_speed > RobotEngine.MAX_SPEED:
+			to_speed = RobotEngine.MAX_SPEED
+		elif to_speed < -RobotEngine.MAX_SPEED:
+			to_speed = RobotEngine.MAX_SPEED
+
+		self.left_speed = abs(to_speed)
+		self.left_motor.setSpeed(self.left_speed)
+		return self.left_speed
+		
+		
+	def speed_motor_right(self, to_speed):
+		if to_speed > 0:
+			self.right_motor.run(Motor.FORWARD)
+		else:
+			self.right_motor.run(Motor.BACKWARD)
+		
+		if to_speed > RobotEngine.MAX_SPEED:
+			to_speed = RobotEngine.MAX_SPEED
+		elif to_speed < -RobotEngine.MAX_SPEED:
+			to_speed = RobotEngine.MAX_SPEED
+
+		self.right_speed = abs(to_speed)
+		self.right_motor.setSpeed(self.right_speed)
+		return self.right_speed
 
 
 	def speed(self, value_speed):
-		if value_speed < 0:
-			value_speed = 0
-		elif value_speed > RobotEngine.MAX_SPEED:
-			value_speed = RobotEngine.MAX_SPEED
-		self.current_speed = value_speed
-		
-		self.left_motor.setSpeed(self.current_speed)
-		self.right_motor.setSpeed(self.current_speed)
-			
+		current_speed = self.speed_motor_left(value_speed)
+		self.speed_motor_right(value_speed)
+		self.current_speed = current_speed
 
 
-	def forward(self):
-		self.left_motor.run(Motor.FORWARD)
-		self.right_motor.run(Motor.FORWARD)
-
-
-	def backward(self):
-		self.left_motor.run(Motor.BACKWARD)
-		self.right_motor.run(Motor.BACKWARD)
-	    
-	    
-	def left(self, angle, intime= 0, inplace = False):
-		self.left_motor.run(Motor.BACKWARD)
-		self.right_motor.run(Motor.FORWARD)
-
-
-	def right(self, angle, intime = 0, inplace = False):
+	def turn(self, speed_turn, inplace = False):
 		if inplace:
-			self.speed(0)
-		self.left_motor.run(Motor.FORWARD)
-		self.right_motor.run(Motor.BACKWARD)
+			if speed_turn > 0:
+				self.left_motor.run(Motor.BACKWARD)
+				self.right_motor.run(Motor.FORWARD)
+			if speed_turn < 0:
+				self.left_motor.run(Motor.FORWARD)
+				self.right_motor.run(Motor.BACKWARD)
+		else:
+			if speed_turn > 0:
+				self.speed_motor_right(self.right_speed - abs(speed_turn))
+			if speed_turn < 0:
+				self.speed_motor_left(self.left_speed - abs(speed_turn))
 
 
 	def stop(self):
