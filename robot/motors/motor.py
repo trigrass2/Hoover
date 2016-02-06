@@ -124,14 +124,14 @@ class StepperMotor:
             elif (self.currentstep >= self.MICROSTEPS*3) and (self.currentstep < self.MICROSTEPS*4):
                 coils = [1, 0, 0, 1]
         else:
-            step2coils = [     [1, 0, 0, 0], 
-                            [1, 1, 0, 0],
-                            [0, 1, 0, 0],
-                            [0, 1, 1, 0],
-                            [0, 0, 1, 0],
-                            [0, 0, 1, 1],
-                            [0, 0, 0, 1],
-                            [1, 0, 0, 1] ]
+            step2coils = [ [1, 0, 0, 0], 
+                           [1, 1, 0, 0],
+                           [0, 1, 0, 0],
+                           [0, 1, 1, 0],
+                           [0, 0, 1, 0],
+                           [0, 0, 1, 1],
+                           [0, 0, 0, 1],
+                           [1, 0, 0, 1] ]
             coils = step2coils[self.currentstep/(self.MICROSTEPS/2)]
 
         #print "coils state = " + str(coils)
