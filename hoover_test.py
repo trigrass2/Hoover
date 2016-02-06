@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from hoover.motors.motor import Motor, DCMotor
+from robot.motors.motor import Motor, DCMotor
 
 import time
 import atexit
@@ -9,10 +9,10 @@ mh = Motor(addr=0x60)
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
-	mh.getMotor(1).run(Motor.RELEASE)
-	mh.getMotor(2).run(Motor.RELEASE)
-	mh.getMotor(3).run(Motor.RELEASE)
-	mh.getMotor(4).run(Motor.RELEASE)
+    mh.getMotor(1).run(Motor.RELEASE)
+    mh.getMotor(2).run(Motor.RELEASE)
+    mh.getMotor(3).run(Motor.RELEASE)
+    mh.getMotor(4).run(Motor.RELEASE)
 
 atexit.register(turnOffMotors)
 
@@ -32,39 +32,39 @@ rMotor.run(Motor.RELEASE);
 
 
 while (True):
-	print("Forward!")
-	lMotor.run(Motor.FORWARD)
-	rMotor.run(Motor.FORWARD)
+    print("Forward!")
+    lMotor.run(Motor.FORWARD)
+    rMotor.run(Motor.FORWARD)
 
-	print("\tSpeed up...")
-	for i in range(100):
-		lMotor.setSpeed(i)
-		rMotor.setSpeed(i)
-		time.sleep(0.1)
+    print("\tSpeed up...")
+    for i in range(100):
+        lMotor.setSpeed(i)
+        rMotor.setSpeed(i)
+        time.sleep(0.1)
 
-	print("\tSlow down...")
-	for i in reversed(range(100)):
-		lMotor.setSpeed(i)
-		rMotor.setSpeed(i)
-		time.sleep(0.1)
+    print("\tSlow down...")
+    for i in reversed(range(100)):
+        lMotor.setSpeed(i)
+        rMotor.setSpeed(i)
+        time.sleep(0.1)
 
-	print("Backward!")
-	lMotor.run(Motor.BACKWARD)
-	rMotor.run(Motor.BACKWARD)
+    print("Backward!")
+    lMotor.run(Motor.BACKWARD)
+    rMotor.run(Motor.BACKWARD)
 
-	print("\tSpeed up...")
-	for i in range(100):
-		lMotor.setSpeed(i)
-		rMotor.setSpeed(i)
-		time.sleep(0.1)
+    print("\tSpeed up...")
+    for i in range(100):
+        lMotor.setSpeed(i)
+        rMotor.setSpeed(i)
+        time.sleep(0.1)
 
-	print("\tSlow down...")
-	for i in reversed(range(100)):
-		lMotor.setSpeed(i)
-		rMotor.setSpeed(i)
-		time.sleep(0.1)
+    print("\tSlow down...")
+    for i in reversed(range(100)):
+        lMotor.setSpeed(i)
+        rMotor.setSpeed(i)
+        time.sleep(0.1)
 
-	print("Release")
-	lMotor.run(Motor.RELEASE)
-	rMotor.run(Motor.RELEASE)
-	time.sleep(1.0)
+    print("Release")
+    lMotor.run(Motor.RELEASE)
+    rMotor.run(Motor.RELEASE)
+    time.sleep(1.0)
