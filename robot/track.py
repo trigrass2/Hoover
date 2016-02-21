@@ -60,8 +60,8 @@ class RobotEngine:
 		return self.right_speed
 
 
-	def speed(self, value_speed):
-		if value_speed > 0:
+	def speed_motor(self, value_speed):
+		if value_speed >= 0:
 			self.left_motor.run(Motor.FORWARD)
 			self.right_motor.run(Motor.FORWARD)
 		else:
@@ -91,7 +91,7 @@ class RobotEngine:
 
 
 	def stop(self):
-		self.speed(0)
+		self.speed_motor(0)
 
 
 	def off(self):

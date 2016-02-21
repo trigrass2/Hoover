@@ -5,10 +5,15 @@ import time
 
 re = RobotEngine()
 
-re.speed(30)
-time.sleep(3)
 re.turn(20)
 time.sleep(3)
-re.speed(30)
-re.turn(-20)
+re.speed_motor(20)
 time.sleep(3)
+re.stop()
+time.sleep(1)
+re.speed_motor(30)
+time.sleep(3)
+re.stop()
+
+
+
