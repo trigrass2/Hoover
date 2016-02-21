@@ -55,6 +55,16 @@ class ASDIC:
 
         return round(distance, 1)
 
+    def distance(self):
+        correct = False
+        while not correct:
+            dist = self.ping()
+            if dist == -1 or dist < -1:
+                continue
+            correct = True
+        return dist
+
+
 
 if __name__ == "__main__":
     asdic = ASDIC()
