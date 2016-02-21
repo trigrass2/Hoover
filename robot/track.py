@@ -38,12 +38,7 @@ class RobotEngine:
 		self.right_motor.run(Motor.RELEASE);
 
 
-	def speed_motor_left(self, to_speed):
-		if to_speed > 0:
-			self.left_motor.run(Motor.FORWARD)
-		else:
-			self.left_motor.run(Motor.BACKWARD)
-		
+	def speed_motor_left(self, to_speed):	
 		if to_speed > RobotEngine.MAX_SPEED:
 			to_speed = RobotEngine.MAX_SPEED
 		elif to_speed < -RobotEngine.MAX_SPEED:
@@ -54,12 +49,7 @@ class RobotEngine:
 		return self.left_speed
 		
 		
-	def speed_motor_right(self, to_speed):
-		if to_speed > 0:
-			self.right_motor.run(Motor.FORWARD)
-		else:
-			self.right_motor.run(Motor.BACKWARD)
-		
+	def speed_motor_right(self, to_speed):	
 		if to_speed > RobotEngine.MAX_SPEED:
 			to_speed = RobotEngine.MAX_SPEED
 		elif to_speed < -RobotEngine.MAX_SPEED:
@@ -71,19 +61,28 @@ class RobotEngine:
 
 
 	def speed(self, value_speed):
-		current_speed = self.speed_motor_left(value_speed)
+		if value_speed > 0:
+			self.left_motor.run(Motor.FORWARD)
+			self.right_motor.run(Motor.FORWARD)
+		else:
+			self.left_motor.run(Motor.BACKWARD)
+			self.right_motor.run(Motor.BACKWARD)
+					
+		self.current_speed = value_speed
+		self.speed_motor_left(value_speed)
 		self.speed_motor_right(value_speed)
-		self.current_speed = current_speed
 
 
-	def turn(self, speed_turn, inplace = False):
-		if inplace:
+	def turn(self, speed_turn):
+		if self.current_speed == 0:
 			if speed_turn > 0:
-				self.left_motor.run(Motor.BACKWARD)
-				self.right_motor.run(Motor.FORWARD)
-			if speed_turn < 0:
 				self.left_motor.run(Motor.FORWARD)
 				self.right_motor.run(Motor.BACKWARD)
+			if speed_turn < 0:
+				self.left_motor.run(Motor.BACKWARD)
+				self.right_motor.run(Motor.FORWARD)
+			self.speed_motor_left(speed_turn)
+			self.speed_motor_right(speed_turn)
 		else:
 			if speed_turn > 0:
 				self.speed_motor_right(self.right_speed - abs(speed_turn))
