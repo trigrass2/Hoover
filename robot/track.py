@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from robot.motors.motor import Motor, DCMotor
+from robot.motors.motor import Motor
 
 import time
 import atexit
