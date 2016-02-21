@@ -13,7 +13,7 @@ robot.speed_motor(30)
 while 1:
     distance = asdic.ping()
     print(distance)
-    if distance < 30:
+    if distance < 40:
         robot.turn(30)
     else:
         robot.speed_motor(30)
