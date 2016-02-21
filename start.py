@@ -14,7 +14,7 @@ while 1:
     distance = asdic.ping()
     print(distance)
     if distance < 30:
-        robot.left(30)
+        robot.turn(30)
     else:
         robot.speed_motor(30)
     time.sleep(0.01)
