@@ -12,6 +12,7 @@ robot.speed_motor(30)
 
 while 1:
     distance = asdic.ping()
+    print(distance)
     if distance < 30:
         robot.left(30)
     else:
